@@ -22,7 +22,7 @@ fn compute_histogram(img: &DynamicImage) -> Vec<Hist> {
     histogram
 }
 
-pub fn convert(key: &str) {
+pub fn convert(key: &str) -> String {
     let raw: Bytes = get_image(key).unwrap();
     let img = Reader::new(Cursor::new(raw))
         .with_guessed_format()
@@ -64,5 +64,6 @@ pub fn convert(key: &str) {
         txt.push(x);
     }
     let end: String = txt.join("\n").to_string();
-    fs::write("foo.txt", end);
+    end
+    // fs::write("foo.txt", end);
 }
