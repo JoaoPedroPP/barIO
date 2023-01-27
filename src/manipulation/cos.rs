@@ -42,7 +42,6 @@ pub fn get_image(key: &str) -> Result<Bytes, String> {
                 .send();
             
             match resp {
-                // Ok(data) => println!("{:?}", data.bytes()),
                 Ok(data) => Ok(data.bytes().unwrap()),
                 Err(error) => {
                     println!("API request not successfull: {}", error);
