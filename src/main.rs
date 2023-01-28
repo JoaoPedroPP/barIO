@@ -17,7 +17,7 @@ fn main() {
 
     let consumer: BaseConsumer = ClientConfig::new()
         .set("bootstrap.servers", kafka_servers)
-        .set("sasl.usernamer", kafka_username)
+        .set("sasl.username", kafka_username)
         .set("sasl.password", kafka_password)
         .set("security.protocol", "SASL_SSL")
         .set("sasl.mechanisms", "PLAIN")
@@ -26,7 +26,7 @@ fn main() {
         .expect("Invalid Kafka Consumer Config");
 
     consumer
-        .subscribe(&[kafka_consumer_topic])
+        .subscribe(&[&kafka_consumer_topic])
         .expect("Consumer topic failed");
 
     loop {
