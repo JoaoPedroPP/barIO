@@ -23,6 +23,5 @@ pub fn producer(data: &str) {
         BaseRecord::to(kafka_producer_topic)
             .key("msg")
             .payload(data)
-            .expect("Msg could not be save")
-    )
+        ).expect("Msg could not be save");
 }
