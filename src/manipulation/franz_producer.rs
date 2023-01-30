@@ -20,7 +20,7 @@ pub fn producer(data: &str) {
         .expect("Invalid Kafka Producer Config");
 
     producer.send(
-        BaseRecord::to(kafka_producer_topic)
+        BaseRecord::to(&kafka_producer_topic)
             .key("msg")
             .payload(data)
         ).expect("Msg could not be save");

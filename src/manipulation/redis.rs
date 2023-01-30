@@ -18,7 +18,6 @@ pub fn save_redis(value: String) ->Result<(), u16> {
             } else {
                 Err(response.status().as_u16())
             }
-            Ok(())
         },
         Err(_error) => Err(500u16),
     }
