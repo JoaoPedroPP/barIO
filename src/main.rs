@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, time::Duration};
 use rdkafka::{
     consumer::{BaseConsumer, Consumer},
     ClientConfig
@@ -30,11 +30,18 @@ fn main() {
         .expect("Consumer topic failed");
 
     loop {
-        let img: String = manipulation::convert("pikachu_p.jpg");
-        match manipulation::save_redis(img) {
-            Ok(_) => println!("Sucesso no redis"),
-            Err(_) => println!("Sem sucesso no redis"),
-        };
+        let pool = consumer.poll(Duration::from_secs(1));
+        for msg in pool {
+            let raw = msg.unwrap();
+            let payload = raw.payload_view::<str>().unwrap();
+            // let payload = raw.payload_view::<KafkaConsumerPayload>().unwrap();
+            println!("Payload: {:?}", payload);
+            let img: String = manipulation::convert("pikachu_p.jpg");
+            match manipulation::save_redis(img) {
+                Ok(_) => println!("Sucesso no redis"),
+                Err(_) => println!("Sem sucesso no redis"),
+            };
+        }
     }
 
 }

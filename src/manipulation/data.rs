@@ -31,3 +31,9 @@ impl URedisPayload {
         URedisPayload{key: key.to_string(), ttl: 100u32, payload: value}
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct KafkaConsumerPayload {
+    pub key: String,
+    pub img: String,
+}
