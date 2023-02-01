@@ -31,14 +31,11 @@ fn main() {
 
     loop {
         let pool = consumer.poll(Duration::from_secs(1));
-        // println!("Pooling");
         for msg in pool {
             let raw = msg.unwrap();
-            let bytes = raw.payload_view::<str>().unwrap();
-            // let bytes = raw.payload().unwrap();
-            // let payload = serde_json::from_slice::<manipulation::KafkaConsumerPayload>(bytes).unwrap();
-            println!("Payload: {:?}", bytes);
-            let img: String = manipulation::convert("pikachu_p.jpg");
+            let bytes = raw.payload().unwrap();
+            let payload: manipulation::KafkaConsumerPayload = serde_json::from_slice(bytes).unwrap();
+            let img: String = manipulation::convert(&payload.img);
             match manipulation::save_redis(img) {
                 Ok(_) => println!("Sucesso no redis"),
                 Err(_) => println!("Sem sucesso no redis"),
