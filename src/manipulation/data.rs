@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
-use serde_json;
+// use serde_json;
+
+use rdkafka::message::FromBytes;
 
 #[derive(Debug, Clone)]
 pub struct Hist {
@@ -32,8 +34,29 @@ impl URedisPayload {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct KafkaConsumerPayload {
     pub key: String,
     pub img: String,
 }
+
+// impl Message for KafkaConsumerPayload {
+//     type Error = String;
+//     fn from_bytes(_: &[u8]) -> Result<&Self, Self::Error> {
+//         Some(&KafkaConsumerPayload {
+//             key: String::from("key"),
+//             img: String::from("test.png")
+//         }).ok_or(String::from("Not"))
+//     }
+// }
+// impl FromBytes for KafkaConsumerPayload {
+//     type Error = String;
+//     fn from_bytes(bytes: &[u8]) -> Result<&KafkaConsumerPayload, String> {
+//         // let resp = Self {
+//         //     key: String::from("key"),
+//         //     img: String::from("test.png")
+//         // };
+//         // Ok(resp)
+//         Ok(&serde_json::from_slice::<KafkaConsumerPayload>(bytes).unwrap())
+//     }
+// }

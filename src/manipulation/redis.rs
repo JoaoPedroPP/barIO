@@ -1,6 +1,6 @@
 use std::env;
-use serde_json;
-use super::{URedisPayload, URedisResponse};
+// use serde_json;
+use super::URedisPayload;
 
 pub fn save_redis(value: String) ->Result<(), u16> {
     let uredis_url = env::var("uREDIS_URL").expect("uREDIS_URL not set");

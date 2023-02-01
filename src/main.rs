@@ -1,7 +1,7 @@
 use std::{env, time::Duration};
 use rdkafka::{
     consumer::{BaseConsumer, Consumer},
-    ClientConfig
+    ClientConfig, Message
 };
 
 mod manipulation;
@@ -31,11 +31,13 @@ fn main() {
 
     loop {
         let pool = consumer.poll(Duration::from_secs(1));
+        // println!("Pooling");
         for msg in pool {
             let raw = msg.unwrap();
-            let payload = raw.payload_view::<str>().unwrap();
-            // let payload = raw.payload_view::<KafkaConsumerPayload>().unwrap();
-            println!("Payload: {:?}", payload);
+            let bytes = raw.payload_view::<str>().unwrap();
+            // let bytes = raw.payload().unwrap();
+            // let payload = serde_json::from_slice::<manipulation::KafkaConsumerPayload>(bytes).unwrap();
+            println!("Payload: {:?}", bytes);
             let img: String = manipulation::convert("pikachu_p.jpg");
             match manipulation::save_redis(img) {
                 Ok(_) => println!("Sucesso no redis"),
@@ -43,5 +45,4 @@ fn main() {
             };
         }
     }
-
 }
