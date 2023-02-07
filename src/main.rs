@@ -36,7 +36,7 @@ fn main() {
             let bytes = raw.payload().unwrap();
             let payload: manipulation::KafkaConsumerPayload = serde_json::from_slice(bytes).unwrap();
             let img: String = manipulation::convert(&payload.img);
-            match manipulation::save_redis(img) {
+            match manipulation::save_redis(&payload.key, img) {
                 Ok(_) => println!("Sucesso no redis"),
                 Err(_) => println!("Sem sucesso no redis"),
             };
