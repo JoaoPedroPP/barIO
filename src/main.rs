@@ -35,7 +35,6 @@ fn main() {
             let raw = msg.unwrap();
             let bytes = raw.payload().unwrap();
             let payload: manipulation::KafkaConsumerPayload = bincode::deserialize(bytes).unwrap();
-            println!("Payload: {:?}", payload);
             let img: String = manipulation::convert(&payload.img);
             match manipulation::save_redis(payload.key, img) {
                 Ok(_) => println!("Sucesso no redis"),

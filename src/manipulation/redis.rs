@@ -1,5 +1,4 @@
 use std::env;
-// use serde_json;
 use super::URedisPayload;
 
 pub fn save_redis(key: String, value: String) ->Result<(), u16> {
