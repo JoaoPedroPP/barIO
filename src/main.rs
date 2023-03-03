@@ -31,7 +31,6 @@ fn main() {
 
     loop {
         let pool = consumer.poll(Duration::from_secs(1));
-        // println!("Pooling");
         for msg in pool {
             let raw = msg.unwrap();
             let bytes = raw.payload().unwrap();
